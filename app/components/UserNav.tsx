@@ -14,10 +14,14 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
+import { createAirbnbHome } from "../actions";
 
 export async function UserNav() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const createHomeWithId = createAirbnbHome.bind(null, {
+    userId: user?.id,
+  });
 
   return (
     <DropdownMenu>
@@ -26,7 +30,8 @@ export async function UserNav() {
           <MenuIcon className="w-6 h-6 lg:w-5 lg:h-5" />
           <img
             src={
-              user?.picture ?? 'https://gd-hbimg.huaban.com/951d39b4ab5b6dd752ed07c6e3a8b8f0bff1af6028fd-V8jEyY_fw236'
+              user?.picture ??
+              "https://gd-hbimg.huaban.com/951d39b4ab5b6dd752ed07c6e3a8b8f0bff1af6028fd-V8jEyY_fw236"
             }
             alt="用户图片"
             className=" rounded-full h-8 w-8 hidden lg:block"
@@ -37,25 +42,31 @@ export async function UserNav() {
         {user ? (
           <>
             <DropdownMenuItem>
-              <form className="w-full">
+              <form action={createHomeWithId} className="w-full">
                 <button type="submit" className="w-full text-start">
-                   你的爱彼迎
+                  你的爱彼迎
                 </button>
               </form>
             </DropdownMenuItem>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href="/my-homes" className="w-full">个人中心</Link>
+              <Link href="/my-homes" className="w-full">
+                个人中心
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href="/favorites" className="w-full">我的收藏</Link>
+              <Link href="/favorites" className="w-full">
+                我的收藏
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href="/reservations" className="w-full">我的预定</Link>
+              <Link href="/reservations" className="w-full">
+                我的预定
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <LogoutLink className="w-full">登出</LogoutLink>
             </DropdownMenuItem>

@@ -3,7 +3,6 @@ import { Noto_Serif } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "./components/Navbar";
 
-
 const noto = Noto_Serif({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className={noto.className}>
-        <NavBar/>
+        <NavBar />
         {children}
       </body>
     </html>
