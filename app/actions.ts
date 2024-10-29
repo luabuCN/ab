@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import prisma from "./lib/db";
 import { supabase } from "./lib/supabase";
+import { revalidatePath } from "next/cache";
 
 export async function createAirbnbHome({ userId }: { userId: string }) {
   const data = await prisma.home.findFirst({
@@ -29,6 +30,23 @@ export async function createAirbnbHome({ userId }: { userId: string }) {
     return redirect(`/create/${data.id}/structure`);
   } else if (data.addedCategory && !data.addedDescription) {
     return redirect(`/create/${data.id}/description`);
+  } else if (
+    data.addedCategory &&
+    data.addedDescription &&
+    !data.addedLocation
+  ) {
+    return redirect(`/create/${data.id}/address`);
+  } else if (
+    data.addedCategory &&
+    data.addedDescription &&
+    data.addedLocation
+  ) {
+    const data = await prisma.home.create({
+      data: {
+        userId,
+      },
+    });
+    return redirect(`/create/${data.id}/structure`);
   }
 }
 
@@ -98,4 +116,34 @@ export async function createLocation(formData: FormData) {
   });
 
   return redirect("/");
+}
+
+export async function addToFavorite(formData: FormData) {
+  const homeId = formData.get("homeId") as string;
+  const userId = formData.get("userId") as string;
+  const pathName = formData.get("pathName") as string;
+
+  const data = await prisma.favorite.create({
+    data: {
+      homeId: homeId,
+      userId: userId,
+    },
+  });
+
+  revalidatePath(pathName);
+}
+
+export async function deleteFavorite(formData: FormData) {
+  const favoriteId = formData.get("favoriteId") as string;
+  const userId = formData.get("userId") as string;
+  const pathName = formData.get("pathName") as string;
+
+  const data = await prisma.favorite.delete({
+    where: {
+      id: favoriteId,
+      userId: userId,
+    },
+  });
+
+  revalidatePath(pathName);
 }
