@@ -62,7 +62,7 @@ export default function ListingCard({
         )}
       </div>
 
-      <Link href={"/"} className="mt-2">
+      <Link href={`/home/${homeId}`} className="mt-2">
         <h3>
           {country?.flag} {country?.label} / {country?.region}
         </h3>

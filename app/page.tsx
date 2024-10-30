@@ -72,7 +72,10 @@ async function ShowItems({
   return (
     <>
       {data.length === 0 ? (
-        <NoItem />
+        <NoItem
+          title="没有找打对应的房源"
+          description="请检查或者创建你的房源"
+        />
       ) : (
         <div className=" grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-4">
           {data.map((item) => (
