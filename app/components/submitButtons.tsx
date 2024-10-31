@@ -66,3 +66,21 @@ export function DeleteFormFavoritesButton() {
     </>
   );
 }
+
+export function ReservationSubmit() {
+  const { pending } = useFormStatus();
+  return (
+    <>
+      {pending ? (
+        <Button disabled className="w-full">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          请等待
+        </Button>
+      ) : (
+        <Button className="w-full" type="submit">
+          预定房间
+        </Button>
+      )}
+    </>
+  );
+}

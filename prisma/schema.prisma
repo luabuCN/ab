@@ -15,13 +15,14 @@ datasource db {
 }
 
 model User {
-  id           String     @id @unique
+  id           String        @id @unique
   email        String
   firstName    String
   profileImage String?
   lastName     String
   Home         Home[]
   Favorite     Favorite[]
+  Reservation  Reservation[]
 }
 
 model Home {
@@ -42,13 +43,28 @@ model Home {
   addedDescription Boolean @default(false)
   addedLocation    Boolean @default(false)
 
-  createdAT DateTime @default(now())
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  createdAT   DateTime      @default(now())
+  User        User?         @relation(fields: [userId], references: [id])
+  userId      String?
+  Reservation Reservation[]
 }
 
 model Favorite {
   id String @id @default(uuid())
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+  Home   Home?   @relation(fields: [homeId], references: [id])
+  homeId String?
+
+  createAt DateTime @default(now())
+}
+
+model Reservation {
+  id String @id @default(uuid())
+
+  startDate DateTime
+  endDate   DateTime
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
