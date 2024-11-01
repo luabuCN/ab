@@ -1,3 +1,5 @@
+"use client";
+
 import { createReservation } from "@/app/actions";
 import CategoryShowcase from "@/app/components/CategoryShowcase";
 import HomeMap from "@/app/components/HomeMap";
@@ -67,7 +69,7 @@ export default async function HomeRoute({
             <p>{data?.bathrooms} Bathrooms</p>
           </div>
           <div className="flex items-center mt-6">
-            <img
+            <Image
               src={
                 data?.User?.profileImage ??
                 "https://gd-hbimg.huaban.com/951d39b4ab5b6dd752ed07c6e3a8b8f0bff1af6028fd-V8jEyY_fw236"

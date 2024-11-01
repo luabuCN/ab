@@ -15,6 +15,7 @@ import {
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import { createAirbnbHome } from "../actions";
+import Image from "next/image";
 
 export async function UserNav() {
   const { getUser } = getKindeServerSession();
@@ -28,7 +29,7 @@ export async function UserNav() {
       <DropdownMenuTrigger>
         <div className=" rounded-full border px-2 py-2 lg:px-4 lg:py-2 flex items-center gap-x-3">
           <MenuIcon className="w-6 h-6 lg:w-5 lg:h-5" />
-          <img
+          <Image
             src={
               user?.picture ??
               "https://gd-hbimg.huaban.com/951d39b4ab5b6dd752ed07c6e3a8b8f0bff1af6028fd-V8jEyY_fw236"
