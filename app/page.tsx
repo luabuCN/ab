@@ -1,9 +1,6 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { MapFilterItems } from "./components/MapFilterItems";
 import prisma from "./lib/db";
 import ListingCard from "./components/ListinfCard";
-import Link from "next/link";
 import { Suspense } from "react";
 import SkeletonCard from "./components/SkeletonCard";
 import { NoItem } from "./components/NoItem";

@@ -1,12 +1,10 @@
-"use client";
-
 import { createReservation } from "@/app/actions";
 import CategoryShowcase from "@/app/components/CategoryShowcase";
 import HomeMap from "@/app/components/HomeMap";
 import { SelectCalender } from "@/app/components/SelectCalender";
 import { ReservationSubmit } from "@/app/components/submitButtons";
 import prisma from "@/app/lib/db";
-import { useCountries } from "@/app/lib/getCountries";
+import { countriesFormatted, useCountries } from "@/app/lib/getCountries";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -46,7 +44,10 @@ export default async function HomeRoute({
   const data = await getData(params.id);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const { getCountryByValue } = useCountries();
+
+  const getCountryByValue = (value: string) => {
+    return countriesFormatted.find((item) => item.value === value);
+  };
   const country = getCountryByValue(data?.country as string);
   return (
     <div className=" w-[75%] mx-auto mt-10 mb-10">
